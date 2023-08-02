@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous">
+    <script src="https://unpkg.com/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+  </head>
+  <body class="container">
+    <h1><%= title%></h1>
+  <form action="/add" method="post" enctype="multipart/form-data">
+    <div>
+      <label for="maXe">Mã xe:</label>
+      <input type="text" name="maXe" placeholder="Mã xe"><br>
+      <label for="tenXe">Tên xe:</label>
+      <input type="text" name="tenXe" placeholder="Tên xe"><br>
+      <label for="giaTien">Giá tiền:</label>
+      <input type="text" name="giaTien" placeholder="Giá tiền"><br>
+      <label for="namSX">Năm sản xuất:</label>
+      <input type="text" name="namSX" placeholder="Năm sản xuất"><br>
+      <label for="hinhAnh">Hình ảnh:</label>
+      <input type="file" name="hinhAnh" multiple><br><br>
+      <button type="submit">Thêm sản phẩm</button>
+    </div>
+  </form>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Mã xe</th>
+      <th>Tên xe</th>
+      <th>Giá tiền</th>
+      <th>Năm SX</th>
+      <th>Hình ảnh</th>
+      <th>Thao tác</th>
+    </tr>
+    </thead>
+      <tbody>
+      <% for (var i=0 ; i<data.length;i++) {%>
+      <tr>
+        <td><%= data[i].maXe%></td>
+        <td><%= data[i].tenXe%></td>
+        <td><%= data[i].giaTien%></td>
+        <td><%= data[i].namSX%></td>
+        <td>
+          <% for (var j=0; j<data[i].hinhAnh.length; j++) { %>
+            <img style="width: 100px; height: 60px" src="/<%= data[i].hinhAnh[j] %>" alt="<%= data[i].tenXe %>">
+          <% } %>
+        </td>
+        <td>
+          <form action="/update/<%= data[i]._id%>" method="get">
+          <button class="btn btn-primary" type="submit">Sửa</button></form>
+          <button class="btn btn-danger" ><a href="/delete/<%= data[i]._id%>" style="text-decoration: none;color: white" >Xóa</a></button>
+
+        </td>
+
+      </tr>
+      <%}%>
+      <!--Thêm các hàng khác tương tự-->
+      </tbody>
+  </table>
+  <% if( typeof  update != "undefined") {%>
+    <form action="/sua/<%= update._id%>" method="post" enctype="multipart/form-data">
+      <div>
+        <label for="maXe">Mã xe:</label>
+        <input type="text" name="maXe" placeholder="Mã xe" value="<%= update.maXe%>"><br>
+        <label for="tenXe">Tên xe:</label>
+        <input type="text" name="tenXe" placeholder="Tên xe" value="<%= update.tenXe%>"><br>
+        <label for="giaTien">Giá tiền:</label>
+        <input type="text" name="giaTien" placeholder="Giá tiền" value="<%= update.giaTien%>"><br>
+        <label for="namSX">Năm sản xuất:</label>
+        <input type="text" name="namSX" placeholder="Năm sản xuất" value="<%= update.namSX%>"><br>
+        <label for="hinhAnh">Hình ảnh:</label>
+        <input type="file" name="hinhAnh" multiple><br><br>
+        <button type="submit">Cập nhật</button>
+      </div>
+    </form>
+  <%}%>
+  </body>
+</html>
